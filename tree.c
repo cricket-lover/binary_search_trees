@@ -38,13 +38,13 @@ Tree_ptr insert(Tree_ptr tree, Object value, Comparator compare_less_than)
 
 Tree_ptr insert_without_recurssion(Tree_ptr tree, Object value, Comparator compare_less_than)
 {
-  if (tree == 0)
+  if (tree == NULL)
   {
     return create_node(value);
   }
   Tree_ptr p_walk = tree;
   Tree_ptr temp = p_walk;
-  while (p_walk != 0)
+  while (p_walk != NULL)
   {
     if (compare_less_than(value, p_walk->value))
     {
