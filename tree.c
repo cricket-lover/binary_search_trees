@@ -86,6 +86,22 @@ Bool search(Tree_ptr tree, Object value, Comparator compare_less_than)
   }
 }
 
+Tree_ptr get_node(Tree_ptr tree, Object value, Comparator compare_less_than)
+{
+  if (tree == NULL || tree->value == value)
+  {
+    return tree;
+  }
+  if (compare_less_than(value, tree->value))
+  {
+    return get_node(tree->left, value, &compare_int);
+  }
+  else
+  {
+    return get_node(tree->right, value, &compare_int);
+  }
+}
+
 Tree_ptr get_min_of_right(Tree_ptr tree)
 {
   if (tree->left == NULL)
@@ -123,6 +139,21 @@ Tree_ptr delete (Tree_ptr tree, Object value, Comparator compare_less_than)
   tree->value = min->value;
   tree->right = delete (tree->right, min->value, compare_less_than);
   return tree;
+}
+
+Tree_ptr right_rotation(Tree_ptr tree, Object node_to_rotate, Comparator compare_less_than)
+{
+  Tree_ptr root = get_node(tree, node_to_rotate, compare_less_than);
+  Tree_ptr pivot = root->left;
+  if (pivot == NULL)
+  {
+    return tree;
+  }
+  root->left = pivot->right;
+  pivot->right = root;
+  root = pivot;
+
+  return root;
 }
 
 void printInOrder(Tree_ptr tree, Displayer display_data)
