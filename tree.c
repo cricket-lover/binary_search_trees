@@ -70,6 +70,61 @@ Tree_ptr insert_without_recurssion(Tree_ptr tree, Object value, Comparator compa
   return tree;
 };
 
+Bool search(Tree_ptr tree, Object value, Comparator compare_less_than)
+{
+  if (tree == NULL || tree->value == value)
+  {
+    return tree == NULL ? False : True;
+  }
+  if (compare_less_than(value, tree->value))
+  {
+    return search(tree->left, value, &compare_int);
+  }
+  else
+  {
+    return search(tree->right, value, &compare_int);
+  }
+}
+
+Tree_ptr get_min_of_right(Tree_ptr tree)
+{
+  if (tree->left == NULL)
+  {
+    return tree;
+  }
+  return get_min_of_right(tree->left);
+}
+
+Tree_ptr delete (Tree_ptr tree, Object value, Comparator compare_less_than)
+{
+  if (tree == NULL)
+  {
+    return tree;
+  }
+  if (compare_less_than(tree->value, value))
+  {
+    tree->right = delete (tree->right, value, compare_less_than);
+    return tree;
+  }
+  if (compare_less_than(value, tree->value))
+  {
+    tree->left = delete (tree->left, value, compare_less_than);
+    return tree;
+  }
+
+  if (tree->left == NULL || tree->right == NULL)
+  {
+    Tree_ptr temp = tree->left == NULL ? tree->right : tree->left;
+    free(tree);
+    return temp;
+  }
+
+  Tree_ptr min = get_min_of_right(tree->right);
+  tree->value = min->value;
+  tree->right = delete (tree->right, min->value, compare_less_than);
+  return tree;
+}
+
 void printInOrder(Tree_ptr tree, Displayer display_data)
 {
   if (tree == NULL)
