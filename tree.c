@@ -142,15 +142,59 @@ Tree_ptr delete (Tree_ptr tree, Object value, Comparator compare_less_than)
 
 Tree_ptr right_rotation(Tree_ptr tree, Object node_to_rotate, Comparator compare_less_than)
 {
-  Tree_ptr root = get_node(tree, node_to_rotate, compare_less_than);
-  Tree_ptr pivot = root->left;
+  if (tree == NULL)
+  {
+    return tree;
+  }
+  if (compare_less_than(tree->value, node_to_rotate))
+  {
+    tree->right = right_rotation(tree->right, node_to_rotate, compare_less_than);
+    return tree;
+  }
+  if (compare_less_than(node_to_rotate, tree->value))
+  {
+    tree->left = right_rotation(tree->left, node_to_rotate, compare_less_than);
+    return tree;
+  }
+
+  Tree_ptr pivot = tree->left;
   if (pivot == NULL)
   {
     return tree;
   }
-  root->left = pivot->right;
-  pivot->right = root;
-  root = pivot;
+  tree->left = pivot->right;
+  pivot->right = tree;
+  tree = pivot;
+
+  return tree;
+}
+
+Tree_ptr left_rotation(Tree_ptr tree, Object node_to_rotate, Comparator compare_less_than)
+{
+  if (tree == NULL)
+  {
+    return tree;
+  }
+  if (compare_less_than(tree->value, node_to_rotate))
+  {
+    tree->right = left_rotation(tree->right, node_to_rotate, compare_less_than);
+    return tree;
+  }
+  if (compare_less_than(node_to_rotate, tree->value))
+  {
+    tree->left = left_rotation(tree->left, node_to_rotate, compare_less_than);
+    return tree;
+  }
+
+  Tree_ptr pivot = tree->right;
+  if (pivot == NULL)
+  {
+    return tree;
+  }
+  tree->right = pivot->left;
+  pivot->left = tree;
+  tree = pivot;
+
   return tree;
 }
 

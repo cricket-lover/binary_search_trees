@@ -29,6 +29,7 @@ Tree_ptr get_node(Tree_ptr tree, Object value, Comparator compare_less_than);
 Tree_ptr get_min_of_right(Tree_ptr tree);
 Tree_ptr delete (Tree_ptr tree, Object value, Comparator compare_less_than);
 Tree_ptr right_rotation(Tree_ptr tree, Object node_to_rotate, Comparator compare_less_than);
+Tree_ptr left_rotation(Tree_ptr tree, Object node_to_rotate, Comparator compare_less_than);
 void printInOrder(Tree_ptr tree, Displayer display_data);
 void printPreOrder(Tree_ptr tree, Displayer display_data);
 void printPostOrder(Tree_ptr tree, Displayer display_data);
