@@ -6,7 +6,6 @@ Tree_ptr create_node(Object a)
   tree->value = a;
   tree->left = NULL;
   tree->right = NULL;
-  tree->parent = NULL;
   return tree;
 }
 
@@ -39,15 +38,14 @@ Tree_ptr insert(Tree_ptr tree, Object value, Comparator compare_less_than)
 
 Tree_ptr insert_without_recurssion(Tree_ptr tree, Object value, Comparator compare_less_than)
 {
-  if (tree == 0)
+  if (tree == NULL)
   {
     return create_node(value);
   }
   Tree_ptr p_walk = tree;
-  Tree_ptr temp = 0;
-  while (p_walk != 0)
+  Tree_ptr temp = NULL;
+  while (p_walk != NULL)
   {
-    p_walk->parent = temp;
     if (compare_less_than(value, p_walk->value))
     {
       temp = p_walk;
@@ -63,12 +61,10 @@ Tree_ptr insert_without_recurssion(Tree_ptr tree, Object value, Comparator compa
   if (compare_less_than(value, temp->value))
   {
     temp->left = create_node(value);
-    temp->left->parent = temp;
   }
   else
   {
     temp->right = create_node(value);
-    temp->right->parent = temp;
   }
 
   return tree;
@@ -152,17 +148,9 @@ Tree_ptr right_rotation(Tree_ptr tree, Object node_to_rotate, Comparator compare
   {
     return tree;
   }
-  Tree_ptr parent = root->parent;
   root->left = pivot->right;
   pivot->right = root;
   root = pivot;
-  if (parent == NULL)
-  {
-    root->parent = NULL;
-    return root;
-  }
-  parent->left = pivot;
-
   return tree;
 }
 

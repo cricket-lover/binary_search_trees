@@ -10,8 +10,6 @@ int main(void)
     insert_without_recurssion(tree, &numbers[i], &compare_int);
   }
 
-  printInOrder(tree, &display_int);
-  tree = right_rotation(tree, &numbers[0], &compare_int);
-  printInOrder(tree, &display_int);
+  printPreOrder(tree, &display_int);
   return 0;
 }

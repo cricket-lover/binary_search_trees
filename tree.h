@@ -10,7 +10,6 @@ typedef struct tree
   Object value;
   struct tree *left;
   struct tree *right;
-  struct tree *parent;
 } Tree;
 typedef Tree *Tree_ptr;
 typedef enum
