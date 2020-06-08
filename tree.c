@@ -1,24 +1,5 @@
 #include "tree.h"
 
-Tree_ptr create_node(Object a)
-{
-  Tree_ptr tree = malloc(sizeof(Tree));
-  tree->value = a;
-  tree->left = NULL;
-  tree->right = NULL;
-  return tree;
-}
-
-void display_int(Object a)
-{
-  printf("%d\n", *(int *)a);
-}
-
-Bool compare_int(Object a, Object b)
-{
-  return *(int *)a < *(int *)b;
-}
-
 Tree_ptr insert(Tree_ptr tree, Object value, Comparator compare_less_than)
 {
   if (tree == NULL)
@@ -85,31 +66,6 @@ Bool search(Tree_ptr tree, Object value, Comparator compare_less_than)
   }
 }
 
-Tree_ptr get_node(Tree_ptr tree, Object value, Comparator compare_less_than)
-{
-  if (tree == NULL || tree->value == value)
-  {
-    return tree;
-  }
-  if (compare_less_than(value, tree->value))
-  {
-    return get_node(tree->left, value, &compare_int);
-  }
-  else
-  {
-    return get_node(tree->right, value, &compare_int);
-  }
-}
-
-Tree_ptr get_min_of_right(Tree_ptr tree)
-{
-  if (tree->left == NULL)
-  {
-    return tree;
-  }
-  return get_min_of_right(tree->left);
-}
-
 Tree_ptr delete (Tree_ptr tree, Object value, Comparator compare_less_than)
 {
   if (tree == NULL)
@@ -140,20 +96,20 @@ Tree_ptr delete (Tree_ptr tree, Object value, Comparator compare_less_than)
   return tree;
 }
 
-Tree_ptr right_rotation(Tree_ptr tree, Object node_to_rotate, Comparator compare_less_than)
+Tree_ptr right_rotation(Tree_ptr tree, Object value_to_rotate, Comparator compare_less_than)
 {
   if (tree == NULL)
   {
     return tree;
   }
-  if (compare_less_than(tree->value, node_to_rotate))
+  if (compare_less_than(tree->value, value_to_rotate))
   {
-    tree->right = right_rotation(tree->right, node_to_rotate, compare_less_than);
+    tree->right = right_rotation(tree->right, value_to_rotate, compare_less_than);
     return tree;
   }
-  if (compare_less_than(node_to_rotate, tree->value))
+  if (compare_less_than(value_to_rotate, tree->value))
   {
-    tree->left = right_rotation(tree->left, node_to_rotate, compare_less_than);
+    tree->left = right_rotation(tree->left, value_to_rotate, compare_less_than);
     return tree;
   }
 
@@ -169,20 +125,20 @@ Tree_ptr right_rotation(Tree_ptr tree, Object node_to_rotate, Comparator compare
   return tree;
 }
 
-Tree_ptr left_rotation(Tree_ptr tree, Object node_to_rotate, Comparator compare_less_than)
+Tree_ptr left_rotation(Tree_ptr tree, Object value_to_rotate, Comparator compare_less_than)
 {
   if (tree == NULL)
   {
     return tree;
   }
-  if (compare_less_than(tree->value, node_to_rotate))
+  if (compare_less_than(tree->value, value_to_rotate))
   {
-    tree->right = left_rotation(tree->right, node_to_rotate, compare_less_than);
+    tree->right = left_rotation(tree->right, value_to_rotate, compare_less_than);
     return tree;
   }
-  if (compare_less_than(node_to_rotate, tree->value))
+  if (compare_less_than(value_to_rotate, tree->value))
   {
-    tree->left = left_rotation(tree->left, node_to_rotate, compare_less_than);
+    tree->left = left_rotation(tree->left, value_to_rotate, compare_less_than);
     return tree;
   }
 
@@ -196,6 +152,23 @@ Tree_ptr left_rotation(Tree_ptr tree, Object node_to_rotate, Comparator compare_
   tree = pivot;
 
   return tree;
+}
+
+void print_tree_structure(Tree_ptr tree, int space, Displayer display_data)
+{
+  if (tree == NULL)
+  {
+    return;
+  }
+  space += COUNT;
+  print_tree_structure(tree->right, space, display_data);
+  printf("\n");
+  for (int i = COUNT; i < space; i++)
+  {
+    printf(" ");
+  }
+  display_data(tree->value);
+  print_tree_structure(tree->left, space, display_data);
 }
 
 void printInOrder(Tree_ptr tree, Displayer display_data)
