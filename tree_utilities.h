@@ -19,7 +19,6 @@ typedef enum
 } Bool;
 typedef Bool (*Comparator)(Object, Object);
 
-void display_int(Object a);
 Tree_ptr create_node(Object a);
 Bool compare_int(Object a, Object b);
 Tree_ptr get_node(Tree_ptr tree, Object value, Comparator compare_less_than);

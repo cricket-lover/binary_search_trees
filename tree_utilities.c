@@ -9,11 +9,6 @@ Tree_ptr create_node(Object a)
   return tree;
 }
 
-void display_int(Object a)
-{
-  printf("%d\n", *(int *)a);
-}
-
 Bool compare_int(Object a, Object b)
 {
   return *(int *)a < *(int *)b;
