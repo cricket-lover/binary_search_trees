@@ -10,5 +10,6 @@ Bool search(Tree_ptr tree, Object value, Comparator compare_less_than);
 Tree_ptr delete (Tree_ptr tree, Object value, Comparator compare_less_than);
 Tree_ptr right_rotation(Tree_ptr tree, Object node_to_rotate, Comparator compare_less_than);
 Tree_ptr left_rotation(Tree_ptr tree, Object node_to_rotate, Comparator compare_less_than);
+Tree_ptr balance_tree(Tree_ptr tree, Comparator compare_less_than);
 
 #endif
